@@ -14,6 +14,8 @@ public class Pago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long idPedido;
+
     @NotBlank(message = "El nombre del cliente es obligatorio")
     private String nombreCliente;
 
