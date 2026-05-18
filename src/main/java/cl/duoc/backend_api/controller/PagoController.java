@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.duoc.backend_api.dto.PagoCreateDTO;
-import cl.duoc.backend_api.dto.PagoDTO;
 import cl.duoc.backend_api.model.Pago;
 import cl.duoc.backend_api.service.PagoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/pagos")
+@RequestMapping("/api/v2/pagos")
 public class PagoController {
 
     private final PagoService pagoService;
@@ -41,11 +39,6 @@ public class PagoController {
     @PostMapping
     public Pago crearPago(@Valid @RequestBody Pago pago) {
         return pagoService.guardarPago(pago);
-    }
-
-    @PostMapping("/procesar")
-    public PagoDTO procesarPago(@RequestBody PagoCreateDTO dto) {
-        return pagoService.procesarPago(dto);
     }
 
     @PutMapping("/{id}")

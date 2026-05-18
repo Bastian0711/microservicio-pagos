@@ -9,6 +9,6 @@ import cl.duoc.backend_api.dto.GenerarSubPedidoDTO;
 @FeignClient(name = "subpedido-service", url = "${subpedido.service.url}")
 public interface SubPedidoClient {
 
-    @PostMapping("/api/subpedidos/generar")
+    @PostMapping("/api/v1/subpedidos/generar")
     void generarSubpedidos(@RequestBody GenerarSubPedidoDTO dto);
 }

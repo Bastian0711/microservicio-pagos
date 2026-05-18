@@ -36,11 +36,28 @@ public class PagoService {
     }
 
     public Pago guardarPago(Pago pago) {
-        pago.setEstado("PENDIENTE");
+
+        PedidoDTO pedido = validarPedido(pago.getIdPedido());
+
+        if (!pedido.getEstado().equalsIgnoreCase("CONFIRMADO")) {
+            throw new RuntimeException("El pedido no está confirmado");
+        }
+
+        pago.setIdPedido(pedido.getIdPedido());
+        pago.setNombreCliente("Cliente " + pedido.getIdUsuario());
+        pago.setMonto(pedido.getTotal());
+        pago.setEstado("APROBADO");
         pago.setMotivoCancelacion(null);
         pago.setMotivoDevolucion(null);
 
-        return pagoRepository.save(pago);
+        Pago pagoGuardado = pagoRepository.save(pago);
+
+        GenerarSubPedidoDTO dto = new GenerarSubPedidoDTO();
+        dto.setIdPedido(pedido.getIdPedido());
+
+        generarSubPedido(dto);
+
+        return pagoGuardado;
     }
 
     public Pago buscarPorId(Long id) {
@@ -166,6 +183,10 @@ public class PagoService {
     private void generarSubPedido(GenerarSubPedidoDTO dto) {
         try {
             subPedidoClient.generarSubpedidos(dto);
+
+        } catch (FeignException.NotFound e) {
+            throw new RecursoNoEncontradoException(
+                    "No se pudo generar subpedidos: pedido no encontrado");
 
         } catch (FeignException e) {
             throw new ServicioNoDisponibleException(
