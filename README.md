@@ -34,23 +34,23 @@ docker compose up -d
 
 ### Obtener pagos
 
-GET /api/v1/pagos
+GET /api/v2/pagos
 
 ### Obtener pago por ID
 
-GET /api/v1/pagos/{id}
+GET /api/v2/pagos/{id}
 
 ### Crear pago
 
-POST /api/v1/pagos
+POST /api/v2/pagos
 
 ### Actualizar pago
 
-PUT /api/v1/pagos/{id}
+PUT /api/v2/pagos/{id}
 
 ### Eliminar pago
 
-DELETE /api/v1/pagos/{id}
+DELETE /api/v2/pagos/{id}
 
 ## Validaciones
 
