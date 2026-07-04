@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v2/pagos")
+@RequestMapping("/api/v3/pagos")
 @Tag(name = "Pagos", description = "Operaciones relacionadas con pagos")
 public class PagoController {
 
