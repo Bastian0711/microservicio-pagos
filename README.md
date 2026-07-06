@@ -43,7 +43,7 @@ Microservicio encargado de gestionar los pagos dentro del sistema de eventos gas
 
 ## Ejecución del proyecto
 
-El repositorio incluye dos formas de trabajar:
+> El código fuente vive en `codigo-fuente/backend-api/` (Maven multi-módulo simple: un único proyecto Spring Boot). Hay dos formas de levantarlo:
 
 ### Opción 1: entorno de desarrollo (contenedor Maven + MySQL)
 
@@ -55,15 +55,17 @@ Esto levanta:
 * `mysql_servidor`: base de datos MySQL en el puerto `3307` (host) → `3306` (contenedor).
 * `entorno_pagos`: contenedor con Maven y JDK 21 montando el código fuente (`./codigo-fuente`) en `/app`, listo para compilar y ejecutar la aplicación manualmente (por ejemplo, con `mvn spring-boot:run` dentro del contenedor).
 
-### Opción 2: imagen de la aplicación
+### Opción 2: imagen de la aplicación (usando el `Dockerfile`)
+
+> Nota: el `docker-compose.yml` no construye ni usa este `Dockerfile`; es una alternativa manual para empaquetar la app en una imagen propia. Ejecutar estos comandos dentro de `codigo-fuente/backend-api/`.
 
 ```bash
 mvn clean package -DskipTests
 docker build -t microservicio-pagos .
-docker run -p 8087:8080 microservicio-pagos
+docker run -p 8087:8087 microservicio-pagos
 ```
 
-> El servicio corre por defecto en el puerto **8087** (definido en `application.properties`), aunque el `Dockerfile` expone el `8080`; ajusta el mapeo de puertos según cómo lo despliegues.
+> El servicio escucha en el puerto **8087** (`server.port=8087` en `application.properties`). El `Dockerfile` declara `EXPOSE 8080`, pero esa línea es solo informativa: no coincide con el puerto real de la app, no cambia dónde escucha Spring Boot ni afecta el mapeo con `-p`. Se recomienda corregir ese `EXPOSE` a `8087` para evitar confusiones.
 
 ### Configuración relevante
 
@@ -173,7 +175,7 @@ http://localhost:8087/doc/swagger-ui.html
 
 ## Pruebas
 
-El proyecto incluye pruebas unitarias e de integración para el modelo, repositorio, servicio y controlador (`src/test/java`), ejecutables con:
+El proyecto incluye pruebas unitarias e de integración para el modelo, repositorio, servicio y controlador (`codigo-fuente/backend-api/src/test/java`), ejecutables con:
 
 ```bash
 mvn test
