@@ -9,6 +9,6 @@ import cl.duoc.backend_api.dto.PedidoDTO;
 @FeignClient(name = "pedido-service", url = "${pedido.service.url}")
 public interface PedidoClient {
 
-    @GetMapping("/api/pedidos/{id}")
+    @GetMapping("/api/v3/orden/{id}")
     PedidoDTO obtenerPedido(@PathVariable Long id);
 }
