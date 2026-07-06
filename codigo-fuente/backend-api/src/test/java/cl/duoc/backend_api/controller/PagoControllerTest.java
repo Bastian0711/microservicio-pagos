@@ -32,7 +32,7 @@ class PagoControllerTest {
 
         when(pagoService.listarPagos()).thenReturn(List.of(dto));
 
-        mockMvc.perform(get("/api/v2/pagos"))
+        mockMvc.perform(get("/api/v3/pagos"))
                 .andExpect(status().isOk());
     }
 
@@ -43,7 +43,7 @@ class PagoControllerTest {
 
         when(pagoService.obtenerPorId(1L)).thenReturn(dto);
 
-        mockMvc.perform(get("/api/v2/pagos/1"))
+        mockMvc.perform(get("/api/v3/pagos/1"))
                 .andExpect(status().isOk());
     }
 
@@ -51,7 +51,7 @@ class PagoControllerTest {
     void testEliminarPagoRetorna200() throws Exception {
         doNothing().when(pagoService).eliminarPago(1L);
 
-        mockMvc.perform(delete("/api/v2/pagos/1"))
+        mockMvc.perform(delete("/api/v3/pagos/1"))
                 .andExpect(status().isOk());
     }
 }
